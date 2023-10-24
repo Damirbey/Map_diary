@@ -1,7 +1,23 @@
-html{
+html,body{
     margin: 0;
     padding: 0;
+    font-size: 62.5%;
 }
+
 .container{
-    background-color: aqua;
+    display: flex;
+    padding: 1rem;
+    
 }
+.form{
+   width:25%;
+   height: 95vh;
+   border: 1px solid #ccc;
+   box-shadow: 3px 3px 3px #888;
+}
+#map{
+    width:75%;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #888;
+    font-size: 1.6rem;
+}   
