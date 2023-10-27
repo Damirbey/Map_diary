@@ -1,23 +1,157 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8" />
         <title>Map Diary</title>
 
         <link href="css/style.css" rel="stylesheet"/>
 
-        <link  defer rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-        <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
 
-        <script src="script.js"></script>
+        <script defer src="script.js"></script>
     </head>
 
     <body>
         <div class="container">
-            <div class="form">
-                <form type="submit">
-                    Activity Name: <input type="text"/>
-                    Duration: <input type="text"/>
+            <div class="overlay">
+                <div class="message"></div>
+            </div>
+            <div class="information">
+                <div class="information_header">
+                    <i class="fa fa-globe fa-4x globe" aria-hidden="true"></i>
+                    <h2 class="heading-2">Map Diary</h2>
+                </div>
+                
+
+                <form class="form hidden">
+                    <div class="form_row">
+                        <label for="activity">Activity Name</label> 
+                        <input type="text" id="activity"/>
+                    </div>
+                    <div class="form_row">
+                        <label for="duration">Duration</label> 
+                        <input type="text" id="duration"/>
+                    </div>
+                    <button class="form_btn">Ok</button>
                 </form>
+
+                <div class="activities">
+                    
+                    <div class="activity">
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-thumb-tack activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Activity text</p>
+                        </div>
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-clock-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">7 hours</p>
+                        </div>
+
+                        <div class="activity_item">
+                            <i class="fa fa-calendar-check-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Friday 7 October, 2023</p>
+                        </div>
+                        
+                    </div>
+
+                    <div class="activity">
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-thumb-tack activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Activity text</p>
+                        </div>
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-clock-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">7 hours</p>
+                        </div>
+
+                        <div class="activity_item">
+                            <i class="fa fa-calendar-check-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Friday 7 October, 2023</p>
+                        </div>
+                        
+                    </div>
+
+                    <div class="activity">
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-thumb-tack activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Activity text</p>
+                        </div>
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-clock-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">7 hours</p>
+                        </div>
+
+                        <div class="activity_item">
+                            <i class="fa fa-calendar-check-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Friday 7 October, 2023</p>
+                        </div>
+                        
+                    </div>
+
+                    <div class="activity">
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-thumb-tack activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Activity text</p>
+                        </div>
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-clock-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">7 hours</p>
+                        </div>
+
+                        <div class="activity_item">
+                            <i class="fa fa-calendar-check-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Friday 7 October, 2023</p>
+                        </div>
+                        
+                    </div>
+
+                    <div class="activity">
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-thumb-tack activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Activity text</p>
+                        </div>
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-clock-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">7 hours</p>
+                        </div>
+
+                        <div class="activity_item">
+                            <i class="fa fa-calendar-check-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Friday 7 October, 2023</p>
+                        </div>
+                        
+                    </div>
+                    <div class="activity">
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-thumb-tack activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Activity text</p>
+                        </div>
+                        
+                        <div class="activity_item">
+                            <i class="fa fa-clock-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">7 hours</p>
+                        </div>
+
+                        <div class="activity_item">
+                            <i class="fa fa-calendar-check-o activity_icon" aria-hidden="true"></i>
+                            <p class="activity_text">Friday 7 October, 2023</p>
+                        </div>
+                        
+                    </div>
+                </div>        
             </div>
             <div id="map"></div>
         </div>

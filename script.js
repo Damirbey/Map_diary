@@ -1,10 +1,27 @@
+const form = document.querySelector('.form')
+const activityInput = document.getElementById('activity');
+const durationInput = document.getElementById('duration');
+
+class Activity{
+    date = new Date();
+    id = new (Date.now()+'').slice(-10);
+    activityName;
+    activityDuration;
+    
+    constructor(name, duration){
+        this.activityName = name;
+        this.activityDuration = duration;
+    }
+}
 
 class App{
     #map;
     #mapEvent;
-
+    
+    activities = [];
     constructor(){
         this._getPosition();
+        form.addEventListener('submit',this._addNewActivity.bind(this));
     }
 
     _getPosition(){
@@ -45,7 +62,19 @@ class App{
 
     _showForm(mapEvent){
         this.#mapEvent = mapEvent;
+        form.classList.remove('hidden');
+        activityInput.focus();
     }
+
+    _addNewActivity(e){
+        e.preventDefault();
+        if(activityInput.value.length == 0 || durationInput.value < 0 || durationInput.value.length == 0){
+            alert("Please check all your inputs");
+            return;
+        }
+        form.classList.add('hidden');
+    }
+
 
 }
 

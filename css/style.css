@@ -9,15 +9,110 @@ html,body{
     padding: 1rem;
     
 }
-.form{
+.information{
    width:25%;
    height: 95vh;
    border: 1px solid #ccc;
    box-shadow: 3px 3px 3px #888;
+   font-size:2rem;
+   display: flex;
+   flex-direction: column;
 }
+
+/***** Styling FORM section *****/
+.information_header{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.globe{
+    cursor: pointer;
+    transition: all .2s;
+}
+.globe:hover{
+    transform: scale(1.1);
+}
+
+.form{
+    padding:5rem;
+    width:60%;
+    background-color: #2d545e;
+    color:#fff;
+    margin:3rem auto;
+    border-radius: 5px;
+}
+.form_row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form input{
+    padding:0.5rem;
+    border-radius: 5px;
+    width:40%;
+    margin: 1rem;
+}
+.form_btn{
+    display:none;
+}
+.activities{
+    overflow-y: scroll;
+}
+.activity{
+    padding:0.5rem;
+    width:90%;
+    margin:1rem auto;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all .2s;
+    box-shadow: 3px 3px 3px #ccc;
+}
+.activity:hover{
+    transform: scale(1.05);
+}
+.activity:nth-of-type(odd){
+    background-color: #e1b382;
+    color:#000;
+    border-left:1rem solid green;
+}
+.activity:nth-of-type(even){
+    background-color: #2d545e;
+    border-left:1rem solid #e1b382;
+    color:#fff;
+
+}
+.activity_item{
+    display: flex;
+    align-items: center;
+    margin: -1rem auto;
+}
+.activity_text{
+    margin-left: 1rem;
+}
+/***** Styling MAP section *****/
 #map{
     width:75%;
     border: 1px solid #ccc;
     box-shadow: 3px 3px 3px #888;
     font-size: 1.6rem;
 }   
+.hidden{
+    display: none;
+}
+/******** TYPOGRAPHY *********/
+
+.heading-2{
+    letter-spacing: 1rem;
+    margin-left: 2.5rem;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    cursor:pointer;
+    transition: all .2s;
+}
+.heading-2:hover{
+    transform:scale(1.1)
+}
+
