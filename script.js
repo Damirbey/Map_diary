@@ -12,10 +12,12 @@ class Activity{
     id = (Date.now() + '').slice(-10);
     activityName;
     activityDuration;
+    coords;
     
-    constructor(name, duration){
+    constructor(name, duration,coords){
         this.activityName = name;
         this.activityDuration = duration;
+        this.coords = coords;
     }
 
     getDateDescription(){
@@ -24,12 +26,13 @@ class Activity{
     }
 }
 class ActivityRestored extends Activity{
-    constructor(name,duration,date,id){
+    constructor(name,duration,date,id,coordinates){
         super();
         this.activityName = name;
         this.activityDuration = duration;
         this.date = new Date(date);
         this.id = id;
+        this.coords = coordinates;
     }
 }
 
@@ -43,6 +46,9 @@ class App{
 
         this._getLocalStorage();
 
+        activitiesContainer.addEventListener('click',function(e){
+            console.log(e.target)
+        })
         overlay.addEventListener('click', this.closeModal);
         form.addEventListener('submit',this._addNewActivity.bind(this));
     }
@@ -64,7 +70,14 @@ class App{
         
         this._displayMarker(coordinates,'Your current location');
         
+        
+
         this.#map.on("click", this._showForm.bind(this))
+
+     
+        this.activities.forEach(activity => {
+            this._displayMarker(activity.coords,activity.activityName);
+          });
 
     }
 
@@ -98,10 +111,16 @@ class App{
             this.showMessage("Please check all your inputs");
             return;
         }
-        let activity = new Activity(activityInput.value,durationInput.value);
+
+        const {lat,lng} = this.#mapEvent.latlng;
+        const coordinates = {lat,lng};
+
+        let activity = new Activity(activityInput.value,durationInput.value,coordinates);
         this.activities.push(activity);
 
         this._renderActivity(activity);
+
+        this._displayMarker(coordinates, activity.activityName);
 
         this._setLocalStorage();
 
@@ -118,7 +137,7 @@ class App{
 
         this.activities = JSON.parse(localStorage.getItem('activities'));
         this.activities = this.activities.map(activity=>{
-            return new ActivityRestored(activity.activityName,activity.activityDuration,activity.date,activity.id)
+            return new ActivityRestored(activity.activityName,activity.activityDuration,activity.date,activity.id,activity.coords)
         })
         this.activities.map(activity=>{
             this._renderActivity(activity);
@@ -129,8 +148,7 @@ class App{
     }
     _renderActivity(activity){
        let activityDate = activity.getDateDescription()
-       let activitiyHtml = `<div class="activity">
-                        
+       let activitiyHtml = `
                 <div class="activity_item">
                     <i class="fa fa-thumb-tack activity_icon" aria-hidden="true"></i>
                     <p class="activity_text">${activity.activityName}</p>
@@ -145,10 +163,12 @@ class App{
                     <i class="fa fa-calendar-check-o activity_icon" aria-hidden="true"></i>
                     <p class="activity_text">${activityDate}</p>
                 </div>
-                      
-            </div>`
-
-        activitiesContainer.insertAdjacentHTML('afterend',activitiyHtml);
+                `
+        const activityElement = document.createElement('div');
+        activityElement.classList.add('activity');
+        activityElement.innerHTML = activitiyHtml;
+        let firstChild = activitiesContainer.firstChild;
+        activitiesContainer.insertBefore(activityElement,firstChild);
     }
 
     inputsValid(){
