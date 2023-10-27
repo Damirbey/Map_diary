@@ -1,6 +1,8 @@
 const form = document.querySelector('.form')
 const activityInput = document.getElementById('activity');
 const durationInput = document.getElementById('duration');
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
 
 class Activity{
     date = new Date();
@@ -21,12 +23,13 @@ class App{
     activities = [];
     constructor(){
         this._getPosition();
+        overlay.addEventListener('click', this.closeModal);
         form.addEventListener('submit',this._addNewActivity.bind(this));
     }
 
     _getPosition(){
         navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), function(){
-            alert("Can not get current location")
+            this.showMessage("Can not get current location")
         });
     }
 
@@ -41,8 +44,8 @@ class App{
         
         this._displayMarker(coordinates,'Your current location');
         
-
         this.#map.on("click", this._showForm.bind(this))
+
     }
 
     _displayMarker(coordinates, text){
@@ -61,6 +64,7 @@ class App{
     }
 
     _showForm(mapEvent){
+        console.log('HERE!')
         this.#mapEvent = mapEvent;
         form.classList.remove('hidden');
         activityInput.focus();
@@ -68,13 +72,31 @@ class App{
 
     _addNewActivity(e){
         e.preventDefault();
-        if(activityInput.value.length == 0 || durationInput.value < 0 || durationInput.value.length == 0){
-            alert("Please check all your inputs");
+        if(!this.inputsValid()){
+            this.showMessage("Please check all your inputs");
             return;
         }
+        let activity = new Activity(activityInput.value,durationInput.value);
+        this.activities.push(activity);
         form.classList.add('hidden');
     }
+    inputsValid(){
+        if(activityInput.value.length == 0 || durationInput.value < 0 || durationInput.value.length == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
+    closeModal(){
+        overlay.classList.add('hidden');
+        modal.classList.add('hidden');
+    }
+    showMessage(message){
+        overlay.classList.remove('hidden');
+        modal.classList.remove('hidden');
+        modal.textContent = message;
+    }
 
 }
 
