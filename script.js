@@ -39,16 +39,15 @@ class ActivityRestored extends Activity{
 class App{
     #map;
     #mapEvent;
-    
+    #mapZoomLevel = 13;
+
     activities = [];
     constructor(){
         this._getPosition();
 
         this._getLocalStorage();
 
-        activitiesContainer.addEventListener('click',function(e){
-            console.log(e.target)
-        })
+        activitiesContainer.addEventListener('click',this._moveToPopup.bind(this));
         overlay.addEventListener('click', this.closeModal);
         form.addEventListener('submit',this._addNewActivity.bind(this));
     }
@@ -62,7 +61,7 @@ class App{
     _loadMap(position){
         const coordinates = [position.coords.latitude, position.coords.longitude];
 
-        this.#map = L.map('map').setView(coordinates, 13);
+        this.#map = L.map('map').setView(coordinates, this.#mapZoomLevel);
 
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -70,14 +69,11 @@ class App{
         
         this._displayMarker(coordinates,'Your current location');
         
-        
-
-        this.#map.on("click", this._showForm.bind(this))
-
-     
         this.activities.forEach(activity => {
             this._displayMarker(activity.coords,activity.activityName);
-          });
+        });
+        
+        this.#map.on("click", this._showForm.bind(this))
 
     }
 
@@ -94,6 +90,25 @@ class App{
             })
         )
         .openPopup();
+    }
+
+    _moveToPopup(e) {
+        if (!this.#map) return;
+    
+        const activityEl = e.target.closest('.activity');
+    
+        if (!activityEl) return;
+        const activity = this.activities.find(
+            activity => activity.id === activityEl.dataset.id
+        );
+    
+        this.#map.setView(activity.coords, this.#mapZoomLevel, {
+          animate: true,
+          pan: {
+            duration: 1,
+          },
+        });
+    
     }
 
     _showForm(mapEvent){
@@ -167,7 +182,8 @@ class App{
         const activityElement = document.createElement('div');
         activityElement.classList.add('activity');
         activityElement.innerHTML = activitiyHtml;
-        let firstChild = activitiesContainer.firstChild;
+        activityElement.dataset.id = activity.id;
+        const firstChild = activitiesContainer.firstChild;
         activitiesContainer.insertBefore(activityElement,firstChild);
     }
 
